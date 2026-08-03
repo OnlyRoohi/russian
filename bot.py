@@ -20,12 +20,10 @@ from telegram.ext import (
 from openai import OpenAI
 
 # ─── Config ───────────────────────────────────────────────────────────────────
-BOT_TOKEN      = os.environ["BOT_TOKEN"]
-OPENAI_API_KEY = os.environ["OPENAI_API_KEY"]
-STARS_PRICE    = int(os.environ.get("STARS_PRICE", "100"))
-DB_PATH        = os.environ.get("DB_PATH", "users.db")
-MAX_HISTORY    = 20   # messages to keep in context
-
+BOT_TOKEN = "8694389985:AAFKk7aM9sf-AU80ZwldHpICv16_QkYS48g"
+OPENAI_API_KEY = "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"
+OWNER_ID = 8941001487
+MONGO_URL = "mongodb+srv://RoohiMusic:theshiv@roohimusicrobot.bmtusim.mongodb.net/?appName=RoohiMusicRobot"
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("couple_bot")
 
