@@ -1,30 +1,66 @@
-# Твоя тянка / သင့်ချစ်သူ — Telegram Bot
+# 💕 Couple Bot — Virtual GF/BF
 
-A virtual girlfriend Telegram bot with **Russian 🇷🇺** and **Myanmar 🇲🇲** language support, powered by OpenAI GPT-4o-mini. Users pay once with Telegram Stars to unlock unlimited AI chat.
-
----
-
-## Features
-- `/start` — welcome message + payment button
-- `/lang` — switch language (Russian ↔ Myanmar)
-- Telegram Stars payment (100 ⭐️ one-time, configurable)
-- OpenAI GPT-4o-mini powered responses
-- SQLite database for paid users + language preferences
+A full dating-feel Telegram bot with **Russian 🇷🇺** and **Myanmar 🇲🇲** language support.  
+Powered by **OpenAI GPT-4o-mini** with conversation memory. Users pay once with **Telegram Stars** to unlock unlimited chat.
 
 ---
 
-## Environment Variables
+## ✨ Features
+
+| Feature | Details |
+|---|---|
+| 💑 Couple feel | Real GF/BF persona, uses your name, remembers chats |
+| 🗣 Languages | Russian 🇷🇺 & Myanmar 🇲🇲 — switchable any time |
+| 🧠 Memory | Last 20 messages kept for context (feels natural) |
+| ⭐️ Payment | Telegram Stars — one-time, no Stripe/card needed |
+| 👤 Profile | See your name, message count, join date |
+| ✏️ Change name | Update what the bot calls you |
+| 🗑 Clear history | Reset conversation any time |
+
+---
+
+## 🤖 Bot Flow
+
+```
+/start
+  └─ Choose language (🇷🇺 / 🇲🇲)
+       └─ Pay 100 ⭐️ (one-time)
+            └─ "What's your name?"
+                 └─ 💬 Start chatting as a couple!
+```
+
+---
+
+## 📋 Commands
+
+| Command | Action |
+|---|---|
+| `/start` | Start / restart bot |
+| `/profile` | View your profile |
+| `/lang` | Change language |
+| `/reset` | Clear chat history |
+
+**Menu Buttons** (keyboard):
+- 💬 Chat
+- 👤 My Profile
+- ✏️ Change Name
+- 🌐 Language
+- 🗑 Clear History
+
+---
+
+## 🔧 Environment Variables
 
 | Variable | Required | Description |
 |---|---|---|
 | `BOT_TOKEN` | ✅ | BotFather token |
 | `OPENAI_API_KEY` | ✅ | OpenAI API key |
 | `STARS_PRICE` | ❌ | Stars cost (default: `100`) |
-| `DB_PATH` | ❌ | SQLite file path (default: `users.db`) |
+| `DB_PATH` | ❌ | SQLite path (default: `users.db`) |
 
 ---
 
-## Local Test
+## 🖥 Local Test
 
 ```bash
 pip install -r requirements.txt
@@ -35,54 +71,50 @@ python bot.py
 
 ---
 
-## Heroku Deploy
+## 🚀 Heroku Deploy
 
-### Step 1 — Create app
 ```bash
+# 1. Create Heroku app
 heroku create your-app-name
-```
 
-### Step 2 — Set environment variables
-```bash
+# 2. Set environment variables
 heroku config:set BOT_TOKEN="your_bot_token"
 heroku config:set OPENAI_API_KEY="your_openai_key"
 heroku config:set STARS_PRICE="100"
-```
 
-### Step 3 — Push code
-```bash
+# 3. Push code
 git init
 git add .
-git commit -m "init"
+git commit -m "couple bot"
 heroku git:remote -a your-app-name
 git push heroku main
-```
 
-### Step 4 — Start worker dyno
-```bash
+# 4. Start worker dyno
 heroku ps:scale worker=1
 ```
 
-> ⚠️ **Important:** Use `worker` dyno (not `web`). This is already set in the `Procfile`.
->
-> 🔴 **Heroku filesystem is ephemeral** — `users.db` resets on dyno restart. For production, add Heroku Postgres:
+> ⚠️ **Heroku filesystem resets on restart** — `users.db` (paid users, names) will be lost.  
+> For production, use **Heroku Postgres**:
 > ```bash
 > heroku addons:create heroku-postgresql:mini
 > ```
-> Then update `bot.py` to use `DATABASE_URL` with `psycopg2` instead of SQLite.
 
 ---
 
-## How Telegram Stars Payment Works
-- `provider_token` is empty string — Telegram Stars don't need a payment provider
-- Currency is `"XTR"` (Telegram Stars)
-- Price is direct star count (100 = 100 stars, no decimal math)
-- Automatically enabled for new bots via BotFather
+## 💳 Telegram Stars Payment
+
+- `provider_token` = `""` (empty string) — Stars need no payment provider
+- `currency` = `"XTR"` — Telegram Stars currency code  
+- Price = direct star count (100 = 100 Stars, no decimals)
+- Automatically enabled on new bots via BotFather
 
 ---
 
-## Bot Commands (set in BotFather)
+## 🤖 BotFather Commands (set these)
+
 ```
 start - Start the bot
-lang - Change language / ဘာသာစကား ပြောင်းရန်
+profile - View your profile
+lang - Change language
+reset - Clear chat history
 ```
